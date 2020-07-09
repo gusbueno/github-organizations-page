@@ -1,6 +1,7 @@
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const svgToMiniDataURI = require('mini-svg-data-uri')
 
 module.exports = {
   devtool: 'source-map',
@@ -31,6 +32,18 @@ module.exports = {
         enforce: "pre",
         test: /\.js$/,
         loader: "source-map-loader"
+      },
+      {
+        test: /\.svg$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              generator: (content) => svgToMiniDataURI(content.toString()),
+            }
+          }
+        ]
       }
     ]
   },
