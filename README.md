@@ -1,1 +1,1 @@
-# github-organizations-page
+# GITHUB ORGANIZATIONS PAGE
