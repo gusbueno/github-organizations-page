@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 
 import rootReducer from './reducers'
+import OrganizationDetail from './OrganizationDetail'
 
 const store = createStore(
   rootReducer(),
@@ -16,7 +17,7 @@ const store = createStore(
 
 render(
   <Provider store={store}>
-    <h1>Organizations page</h1>
+    <OrganizationDetail />
   </Provider>,
   document.getElementById('root')
 )
