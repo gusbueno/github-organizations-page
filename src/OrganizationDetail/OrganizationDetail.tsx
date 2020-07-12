@@ -3,11 +3,12 @@ import React from 'react'
 import {
   Container
 } from './OrganizationDetail.styles'
+import type { Props } from './OrganizationDetail.types'
 import SearchBar from './components/SearchBar'
 
-const OrganizationDetail = () => {
-  const handleSearchOrganization = (term: string) => {
-    console.log(term)
+const OrganizationDetail = ({ onGetOrganizationData }: Props) => {
+  const handleSearchOrganization = (organizationName: string) => {
+    onGetOrganizationData(organizationName)
   }
 
   return (
