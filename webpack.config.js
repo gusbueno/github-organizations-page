@@ -53,6 +53,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html'
     }),
-    new Dotenv()
+    !process.env.VERCEL_GITHUB_DEPLOYMENT && new Dotenv()
   ]
 }
