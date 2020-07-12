@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux'
 
-const rootReducer = () => combineReducers({ })
+import organizationDetail from './OrganizationDetail/OrganizationDetail.reducer'
+
+const rootReducer = () => combineReducers({
+  organizationDetail
+})
 
 export default rootReducer

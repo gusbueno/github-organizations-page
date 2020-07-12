@@ -6,7 +6,7 @@ import {
 import type { Props } from './OrganizationDetail.types'
 import SearchBar from './components/SearchBar'
 
-const OrganizationDetail = ({ onGetOrganizationData }: Props) => {
+const OrganizationDetail = ({ onGetOrganizationData, isFetching, organizationInfo }: Props) => {
   const handleSearchOrganization = (organizationName: string) => {
     onGetOrganizationData(organizationName)
   }
