@@ -38,7 +38,7 @@ export const ButtonStyled = styled.button(({
 
   return css`
     height: 32px;
-    font-size: ${UITheme.fontSize};
+    font-size: ${UITheme.fontSize.default};
     font-family: Roboto;
     border-radius: ${UITheme.borderRadius};
     box-sizing: border-box;

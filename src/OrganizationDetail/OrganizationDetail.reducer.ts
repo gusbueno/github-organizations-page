@@ -14,7 +14,8 @@ const organizationDetail = (state = defaultState, action: OrganizationDetailActi
     case FETCH_ORGANIZATION_DETAIL_START: {
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        organizationInfo: null
       }
     }
     case FETCH_ORGANIZATION_DETAIL_SUCCESS: {

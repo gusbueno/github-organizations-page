@@ -11,7 +11,7 @@ export const InputStyled = styled.input`
   border-color: lightgray;
   outline: none;
   padding: 0 ${theme.space};
-  font-size: ${theme.fontSize};
+  font-size: ${theme.fontSize.default};
   height: 32px;
   font-family: Roboto;
   background-color: ${palette.secondary};
