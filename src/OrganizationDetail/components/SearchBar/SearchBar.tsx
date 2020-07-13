@@ -21,7 +21,7 @@ const SearchBar = ({ onSearchOrganization }: Props) => {
 
   return (
     <Container onSubmit={handleFormSubmit}>
-      <Input value={term} onChange={handleInputChange} />
+      <Input value={term} placeholder="Search for an organization" onChange={handleInputChange} />
       <Button ml={12} type="submit" isDisabled={!term}>Search</Button>
     </Container>
   )

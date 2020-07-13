@@ -1,6 +1,7 @@
 import styled from 'styled-components'
+import { rgba } from 'polished'
 
-import { theme } from '../../../UI/core'
+import { theme, palette } from '../../../UI/core'
 
 export const Container = styled.form`
   display: flex;
@@ -9,4 +10,5 @@ export const Container = styled.form`
   align-items: center;
   padding: 0 ${theme.space};
   box-sizing: border-box;
+  border-bottom: 1px solid ${rgba(palette.black, 0.1)};
 `
