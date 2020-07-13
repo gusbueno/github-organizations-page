@@ -12,6 +12,7 @@ export interface IPinnedItem {
   description: string,
   stars: number,
   forkCount: number,
+  resourcePath: string,
   primaryLanguage: IPrimaryLanguage
 }
 
@@ -19,8 +20,6 @@ export interface IOrganizationInfo {
   name: string,
   avatarUrl: string,
   description: string,
-  email: string,
-  isVerified: boolean,
   location: string,
   websiteUrl: string,
   pinnedItems: Array<IPinnedItem>

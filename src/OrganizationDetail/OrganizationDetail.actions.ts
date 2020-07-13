@@ -27,7 +27,7 @@ export const fetchOrganizationDataFail = () => ({
 
 const normalizePinnedItems = (pinnedItems: Array<any>): Array<IPinnedItem> => {
   return pinnedItems.map((pinnedItem: any) => {
-    const { name, forkCount, description, primaryLanguage, stargazers: { totalCount } } = pinnedItem.node
+    const { name, forkCount, description, primaryLanguage, stargazers: { totalCount }, resourcePath } = pinnedItem.node
     return {
       name,
       forkCount,
@@ -36,7 +36,8 @@ const normalizePinnedItems = (pinnedItems: Array<any>): Array<IPinnedItem> => {
         name: primaryLanguage.name,
         color: primaryLanguage.color
       },
-      stars: totalCount
+      stars: totalCount,
+      resourcePath
     }
   })
 }
@@ -49,20 +50,18 @@ export const getOrganizationData = (organizationName: string): ThunkAction<void,
         {
           organization(login: "${organizationName}") {
             name
-            email
             location
             avatarUrl
             websiteUrl
-            isVerified
             description
             pinnedItems(first: 10) {
-              totalCount
               edges {
                 node {
                   ... on Repository {
                     name
                     description
                     forkCount
+                    resourcePath
                     primaryLanguage {
                       name
                       color
@@ -81,6 +80,7 @@ export const getOrganizationData = (organizationName: string): ThunkAction<void,
                 updatedAt
                 forkCount
                 isFork
+                resourcePath
                 parent {
                   nameWithOwner
                 }
@@ -103,13 +103,11 @@ export const getOrganizationData = (organizationName: string): ThunkAction<void,
     })
     .then((result: any) => {
       console.log(result)
-      const { name, description, avatarUrl, email, isVerified, location, websiteUrl, pinnedItems } = result.data.organization
+      const { name, description, avatarUrl, location, websiteUrl, pinnedItems } = result.data.organization
       const organizationInfo: IOrganizationInfo = {
         name,
         description,
         avatarUrl,
-        email,
-        isVerified,
         location,
         websiteUrl,
         pinnedItems: normalizePinnedItems(pinnedItems.edges)
