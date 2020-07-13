@@ -5,7 +5,7 @@ import { HttpLink } from 'apollo-link-http'
 
 const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql' })
 const cache = new InMemoryCache({})
-const AUTH_TOKEN: string = process.env.GITHUB_KEY || ''
+const AUTH_TOKEN: string = process.env.AUTH_TOKEN || ''
 
 const apolloLink = new ApolloLink((operation, forward) => {
   if (AUTH_TOKEN) {
