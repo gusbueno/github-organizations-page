@@ -4,10 +4,12 @@ import { gql } from 'apollo-boost'
 import { IStore } from '../store'
 import {
   IPinnedItem,
+  IRepository,
   IOrganizationInfo,
   OrganizationDetailActionTypes,
   FETCH_ORGANIZATION_DETAIL_START,
   FETCH_ORGANIZATION_DETAIL_SUCCESS,
+  FETCH_REPOSITORIES_SUCCESS,
   FETCH_ORGANIZATION_DETAIL_FAIL
 } from './OrganizationDetail.types'
 import apolloClient from '../config/apolloClient'
@@ -21,29 +23,57 @@ export const fetchOrganizationDataSuccess = (organizationInfo: IOrganizationInfo
   organizationInfo
 })
 
+export const fetchRepositoriesSuccess = (repositories: Array<IRepository>) => ({
+  type: FETCH_REPOSITORIES_SUCCESS,
+  repositories
+})
+
 export const fetchOrganizationDataFail = () => ({
   type: FETCH_ORGANIZATION_DETAIL_FAIL
 })
 
 const normalizePinnedItems = (pinnedItems: Array<any>): Array<IPinnedItem> => {
-  return pinnedItems.map((pinnedItem: any) => {
-    const { name, forkCount, description, primaryLanguage, stargazers: { totalCount }, resourcePath } = pinnedItem.node
+  return pinnedItems.map((pinnedItem: any): IPinnedItem => {
+    const { id, name, forkCount, description, primaryLanguage, stargazers: { totalCount }, resourcePath } = pinnedItem.node
     return {
+      id,
       name,
       forkCount,
       description,
-      primaryLanguage: {
+      primaryLanguage: (primaryLanguage && {
         name: primaryLanguage.name,
         color: primaryLanguage.color
-      },
+      }),
       stars: totalCount,
       resourcePath
     }
   })
 }
 
+const normalizeRepositories = (repositories: Array<any>): Array<IRepository> => {
+  return repositories.map((repo: any): IRepository => {
+    const { id, name, description, isFork, forkCount, licenseInfo, parent, resourcePath, stargazers: { totalCount }, primaryLanguage, updatedAt } = repo
+    return {
+      id,
+      name,
+      description,
+      isFork,
+      forkCount,
+      forkedFrom: parent?.nameWithOwner,
+      license: licenseInfo?.spdxId,
+      resourcePath,
+      stars: totalCount,
+      primaryLanguage: (primaryLanguage && {
+        name: primaryLanguage.name,
+        color: primaryLanguage.color
+      }),
+      updatedAt
+    }
+  })
+}
+
 export const getOrganizationData = (organizationName: string): ThunkAction<void, IStore, undefined, any> => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(fetchOrganizationDataStart())
     apolloClient.query({
       query: gql`
@@ -58,6 +88,7 @@ export const getOrganizationData = (organizationName: string): ThunkAction<void,
               edges {
                 node {
                   ... on Repository {
+                    id
                     name
                     description
                     forkCount
@@ -75,6 +106,7 @@ export const getOrganizationData = (organizationName: string): ThunkAction<void,
             }
             repositories(first: 10) {
               nodes {
+                id
                 name
                 description
                 updatedAt
@@ -89,8 +121,7 @@ export const getOrganizationData = (organizationName: string): ThunkAction<void,
                   color
                 }
                 licenseInfo {
-                  name
-                  nickname
+                  spdxId
                 }
                 stargazers {
                   totalCount
@@ -102,8 +133,7 @@ export const getOrganizationData = (organizationName: string): ThunkAction<void,
       `
     })
     .then((result: any) => {
-      console.log(result)
-      const { name, description, avatarUrl, location, websiteUrl, pinnedItems } = result.data.organization
+      const { name, description, avatarUrl, location, websiteUrl, pinnedItems, repositories } = result.data.organization
       const organizationInfo: IOrganizationInfo = {
         name,
         description,
@@ -113,7 +143,10 @@ export const getOrganizationData = (organizationName: string): ThunkAction<void,
         pinnedItems: normalizePinnedItems(pinnedItems.edges)
       }
       
+      const repos: Array<IRepository> = normalizeRepositories(repositories.nodes)
+
       dispatch(fetchOrganizationDataSuccess(organizationInfo))
+      dispatch(fetchRepositoriesSuccess(repos))
     })
     .catch(e => {
       console.log(e)

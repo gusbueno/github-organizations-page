@@ -7,6 +7,7 @@ export interface IStore {
 export default {
   organizationDetail: {
     isFetching: false,
-    organizationInfo: null
+    organizationInfo: null,
+    repositories: []
   }
 }

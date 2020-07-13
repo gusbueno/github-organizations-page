@@ -1,5 +1,6 @@
 export const FETCH_ORGANIZATION_DETAIL_START: string = 'FETCH_ORGANIZATION_DETAIL_START'
 export const FETCH_ORGANIZATION_DETAIL_SUCCESS: string = 'FETCH_ORGANIZATION_DETAIL_SUCCESS'
+export const FETCH_REPOSITORIES_SUCCESS: string = 'FETCH_REPOSITORIES_SUCCESS'
 export const FETCH_ORGANIZATION_DETAIL_FAIL: string = 'FETCH_ORGANIZATION_DETAIL_FAIL'
 
 interface IPrimaryLanguage {
@@ -8,12 +9,27 @@ interface IPrimaryLanguage {
 }
 
 export interface IPinnedItem {
+  id: string,
   name: string,
   description: string,
   stars: number,
   forkCount: number,
   resourcePath: string,
   primaryLanguage: IPrimaryLanguage
+}
+
+export interface IRepository {
+  id: string,
+  name: string,
+  description: string,
+  isFork: boolean,
+  forkCount: number,
+  license: string,
+  forkedFrom: string,
+  resourcePath: string,
+  stars: number,
+  primaryLanguage: IPrimaryLanguage,
+  updatedAt: string
 }
 
 export interface IOrganizationInfo {
@@ -27,7 +43,8 @@ export interface IOrganizationInfo {
 
 export interface IOrganizationDetailState {
   isFetching: boolean,
-  organizationInfo: IOrganizationInfo
+  organizationInfo: IOrganizationInfo,
+  repositories: Array<IRepository>
 }
 
 interface IOrganizationDetailStartAction {

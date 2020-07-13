@@ -4,6 +4,7 @@ import {
   OrganizationDetailActionTypes,
   FETCH_ORGANIZATION_DETAIL_START,
   FETCH_ORGANIZATION_DETAIL_SUCCESS,
+  FETCH_REPOSITORIES_SUCCESS,
   FETCH_ORGANIZATION_DETAIL_FAIL
 } from './OrganizationDetail.types'
 
@@ -25,6 +26,15 @@ const organizationDetail = (state = defaultState, action: OrganizationDetailActi
         ...state,
         isFetching: false,
         organizationInfo
+      }
+    }
+    case FETCH_REPOSITORIES_SUCCESS: {
+      // @ts-ignore
+      const { repositories } = action
+      return {
+        ...state,
+        isFetching: false,
+        repositories
       }
     }
     case FETCH_ORGANIZATION_DETAIL_FAIL: {

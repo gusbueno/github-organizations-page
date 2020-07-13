@@ -40,18 +40,20 @@ const OrganizationInfo = ({ info }: Props) => {
         <PinnedItemsTitle>Pinned repositories</PinnedItemsTitle>
         <PinnedItemsList>
           {pinnedItems.map((repo: IPinnedItem) => {
-            const { name, description, forkCount, resourcePath, stars, primaryLanguage } = repo
+            const { id, name, description, forkCount, resourcePath, stars, primaryLanguage } = repo
             return (
-              <PinnedItemBoxLink href={`https://github.com${resourcePath}`} target="_blank">
+              <PinnedItemBoxLink key={id} href={`https://github.com${resourcePath}`} target="_blank">
                 <PinnedItemInfoWrapper>
                   <PinnedItemNameText>{name}</PinnedItemNameText>
                   <PinnedItemDescriptionText>{description}</PinnedItemDescriptionText>
                 </PinnedItemInfoWrapper>
                 <PinnedItemExtraInfoWrapper>
-                  <PinnedItemExtraInfoElement>
-                    <LanguageCircle color={primaryLanguage.color} />
-                    <PinnedItemExtraInfoElementText>{primaryLanguage.name}</PinnedItemExtraInfoElementText>
-                  </PinnedItemExtraInfoElement>
+                  {primaryLanguage && (
+                    <PinnedItemExtraInfoElement>
+                      <LanguageCircle color={primaryLanguage.color} />
+                      <PinnedItemExtraInfoElementText>{primaryLanguage.name}</PinnedItemExtraInfoElementText>
+                    </PinnedItemExtraInfoElement>
+                  )}
                   {stars > 0 && (
                     <PinnedItemExtraInfoElement>
                       <ExtraInfoItemIcon src={starIcon} alt="stars" />

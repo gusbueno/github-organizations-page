@@ -12,3 +12,8 @@ export const getOrganizationInfo = createSelector(
   [getOrganizationDetail],
   ({ organizationInfo }) => organizationInfo
 )
+
+export const getRepositories = createSelector(
+  [getOrganizationDetail],
+  ({ repositories }) => repositories
+)

@@ -64,8 +64,12 @@ export const ExtraInfoItemText = styled.span`
   font-family: Roboto;
   color: ${rgba(palette.dark, 0.8)};
 
-  > a:hover {
-    color: ${palette.primary};
+  > a {
+    text-decoration: none;
+    color: ${rgba(palette.dark, 0.8)};
+    &:hover {
+      color: ${palette.primary};
+    }
   }
 `
 
