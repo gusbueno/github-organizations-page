@@ -3,6 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const svgToMiniDataURI = require('mini-svg-data-uri')
 const Dotenv = require('dotenv-webpack')
+const webpack = require('webpack')
 
 module.exports = {
   devtool: 'source-map',
@@ -53,6 +54,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html'
     }),
-    new Dotenv()
+    new Dotenv(),
+    new webpack.DefinePlugin({
+      'process.env.GITHUB_TOKEN': JSON.stringify(process.env.GITHUB_TOKEN)
+    })
   ]
 }
