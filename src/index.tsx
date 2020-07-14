@@ -11,7 +11,8 @@ const store = createStore(
   rootReducer(),
   compose(
     applyMiddleware(thunk),
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+    // uncomment this line if you have already installed redux dev tool plugin in Chrome
+    // (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
   )
 )
 
