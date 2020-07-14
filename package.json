@@ -1,6 +1,6 @@
 {
   "name": "github-organizations-page",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "index.js",
   "repository": "https://github.com/gusbueno/github-organizations-page.git",
   "author": "Gustavo Bueno <gustavo.bueno89@gmail.com>",
