@@ -1,34 +1,59 @@
 import React from 'react'
+import { useLazyQuery } from '@apollo/client'
 
 import {
   Container
 } from './OrganizationDetail.styles'
-import type { Props } from './OrganizationDetail.types'
+import type {
+  IRepository,
+  IOrganizationInfo,
+} from './OrganizationDetail.types'
+import { GET_ORGANIZATION } from '../graphql/queries'
+import { normalizePinnedItems, normalizeRepositories } from '../utils'
 import SearchBar from './components/SearchBar'
 import OrganizationDetailEmpty from './components/OrganizationDetailEmpty'
 import OrganizationDetailLoading from './components/OrganizationDetailLoading'
 import OrganizationInfo from './components/OrganizationInfo'
 import OrganizationRepositories from './components/OrganizationRepositories'
 
-const OrganizationDetail = ({ onGetOrganizationData, isFetching, organizationInfo, repositories }: Props) => {
+const OrganizationDetail = () => {
+  const [loadOrganization, { loading, error, data }] = useLazyQuery(GET_ORGANIZATION, {
+    variables: { login: '' }
+  })
+
   const handleSearchOrganization = (organizationName: string) => {
-    onGetOrganizationData(organizationName)
+    loadOrganization({ variables: { login: organizationName } })
   }
 
   const renderContent = () => {
-    return organizationInfo ? (
+    if (data?.organization && !error) {
+      const { name, description, avatarUrl, location, websiteUrl, pinnedItems, repositories } = data.organization
+      const organizationInfo: IOrganizationInfo = {
+        name,
+        description,
+        avatarUrl,
+        location,
+        websiteUrl,
+        pinnedItems: normalizePinnedItems(pinnedItems.edges)
+      }
+      
+      const repos: Array<IRepository> = normalizeRepositories(repositories.nodes)
+
+      return (
         <>
           <OrganizationInfo info={organizationInfo} /> 
-          <OrganizationRepositories repositories={repositories} />
+          <OrganizationRepositories repositories={repos} />
         </>
-      ) :
-      <OrganizationDetailEmpty />
+      )
+    }
+
+    return <OrganizationDetailEmpty />
   }
 
   return (
     <Container>
       <SearchBar onSearchOrganization={handleSearchOrganization} />
-      {isFetching ?
+      {loading ?
         <OrganizationDetailLoading /> :
         renderContent()
       }

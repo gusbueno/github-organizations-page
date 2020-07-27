@@ -1,6 +1,6 @@
 {
   "name": "github-organizations-page",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "main": "index.js",
   "repository": "https://github.com/gusbueno/github-organizations-page.git",
   "author": "Gustavo Bueno <gustavo.bueno89@gmail.com>",
@@ -13,7 +13,6 @@
   "devDependencies": {
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
-    "@types/react-redux": "^7.1.9",
     "@types/styled-components": "^5.1.1",
     "@types/webpack-dev-server": "^3.11.0",
     "clean-webpack-plugin": "^3.0.0",
@@ -29,19 +28,11 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "apollo-boost": "^0.4.9",
-    "apollo-cache-inmemory": "^1.6.6",
-    "apollo-client": "^2.6.10",
-    "apollo-link": "^1.2.14",
-    "apollo-link-http": "^1.5.17",
+    "@apollo/client": "^3.0.2",
     "graphql": "^15.3.0",
     "polished": "^3.6.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-redux": "^7.2.0",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0",
     "styled-components": "^5.1.1"
   }
 }
