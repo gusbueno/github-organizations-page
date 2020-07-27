@@ -10,9 +10,7 @@ This project allows you to search organizations in Github :octocat: by using the
 
 ## Technologies used
 - [react](https://reactjs.org/)
-- [redux](https://redux.js.org/)
 - [styled-components](https://styled-components.com/)
 - [Apollo](https://www.apollographql.com/)
-- [reselect](https://github.com/reduxjs/reselect)
 - [typescript](https://www.typescriptlang.org/)
 - [webpack](https://webpack.js.org/)
