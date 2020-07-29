@@ -14,3 +14,5 @@ This project allows you to search organizations in Github :octocat: by using the
 - [Apollo](https://www.apollographql.com/)
 - [typescript](https://www.typescriptlang.org/)
 - [webpack](https://webpack.js.org/)
+- [jest](https://jestjs.io/)
+- [@testing-library/react](https://github.com/testing-library/react-testing-library)
